@@ -1,28 +1,28 @@
 <?php
 
-namespace  App\Controller\Admin;
+namespace App\Controller\Admin;
 
-use App\Entity\LightNovel;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class LightNovelCrudController extends AbstractCrudController
+class UserCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return LightNovel::class;
+        return User::class;
     }
+
 
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('Title'),
-            TextField::new('Author'),
-            TextEditorField::new('description'),
-            AssociationField::new('inGenre')
+            TextField::new('username'),
+            AssociationField::new('follow')
+
         ];
     }
-
 }

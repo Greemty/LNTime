@@ -31,9 +31,13 @@ class LightNovel
     #[ORM\ManyToMany(targetEntity: Genre::class, inversedBy: 'lightNovels')]
     private Collection $inGenre;
 
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'follow')]
+    private Collection $users;
+
     public function __construct()
     {
         $this->inGenre = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -120,6 +124,33 @@ class LightNovel
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addFollow($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeFollow($this);
+        }
 
         return $this;
     }

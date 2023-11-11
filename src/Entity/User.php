@@ -34,9 +34,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: LightNovel::class)]
     private Collection $Library;
 
+    #[ORM\ManyToMany(targetEntity: LightNovel::class, inversedBy: 'users')]
+    private Collection $follow;
+
     public function __construct()
     {
         $this->Library = new ArrayCollection();
+        $this->follow = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -126,7 +130,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
+    public function __toString()
+    {
+        return $this->username;
+    }
     public function removeLibrary(LightNovel $library): static
     {
         if ($this->Library->removeElement($library)) {
@@ -135,6 +142,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $library->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LightNovel>
+     */
+    public function getFollow(): Collection
+    {
+        return $this->follow;
+    }
+
+    public function addFollow(LightNovel $follow): static
+    {
+        if (!$this->follow->contains($follow)) {
+            $this->follow->add($follow);
+        }
+
+        return $this;
+    }
+
+    public function removeFollow(LightNovel $follow): static
+    {
+        $this->follow->removeElement($follow);
 
         return $this;
     }

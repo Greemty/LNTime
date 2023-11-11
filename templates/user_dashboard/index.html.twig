@@ -9,12 +9,16 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Hello {{ User }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/esteban/Desktop/Rendu PhP/LNTime/src/Controller/UserDashboardController.php'|file_link(0) }}">src/Controller/UserDashboardController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/esteban/Desktop/Rendu PhP/LNTime/templates/user_dashboard/index.html.twig'|file_link(0) }}">templates/user_dashboard/index.html.twig</a></code></li>
-    </ul>
 </div>
+
+    <div class="example-wrapper">
+        <h1>Liste de vos LightNovels :</h1>
+        <ul>
+            {% for lightnovel in User.follow %}
+                <li><a href="{{ path('lightnovel', {'title': lightnovel.title}) }}">{{ lightnovel }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}
