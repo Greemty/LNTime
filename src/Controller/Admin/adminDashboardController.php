@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\LightNovel;
 use App\Entity\Genre;
 
+use App\Entity\LnList;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -49,5 +50,7 @@ class adminDashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('User', 'fas fa-list', User::class);
         yield MenuItem::linkToCrud('Genre', 'fas fa-list', Genre::class);
         yield MenuItem::linkToCrud('LightNovel', 'fas fa-list', LightNovel::class);
+        yield MenuItem::linkToCrud('lnList', 'fas fa-list', LnList::class);
+
     }
 }

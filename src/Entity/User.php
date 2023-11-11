@@ -37,10 +37,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: LightNovel::class, inversedBy: 'users')]
     private Collection $follow;
 
+    #[ORM\OneToMany(mappedBy: 'isOwned', targetEntity: LnList::class)]
+    private Collection $lnLists;
+
     public function __construct()
     {
         $this->Library = new ArrayCollection();
         $this->follow = new ArrayCollection();
+        $this->lnLists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -169,4 +173,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, LnList>
+     */
+    public function getLnLists(): Collection
+    {
+        return $this->lnLists;
+    }
+
+    public function addLnList(LnList $lnList): static
+    {
+        if (!$this->lnLists->contains($lnList)) {
+            $this->lnLists->add($lnList);
+            $lnList->setIsOwned($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLnList(LnList $lnList): static
+    {
+        if ($this->lnLists->removeElement($lnList)) {
+            // set the owning side to null (unless already changed)
+            if ($lnList->getIsOwned() === $this) {
+                $lnList->setIsOwned(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+
 }

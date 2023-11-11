@@ -1,0 +1,18 @@
+<ul>
+    {% for ln in field.value %}
+    {%- set url = ea_url()
+        .setController('App\\Controller\\Admin\\LnListCrudController')
+        .setAction('detail')
+        .setEntityId(ln.id)
+    -%}
+    <li>
+        <a href="{{ url }}">
+            {{ ln }}
+        </a>
+    </li>
+    {% else %}
+</ul>
+<span class="badge badge-secondary">None</span>
+<ul>
+    {% endfor %}
+</ul>
