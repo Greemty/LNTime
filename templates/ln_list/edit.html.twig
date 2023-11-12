@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit LnList{% endblock %}
+
+{% block body %}
+    <h1>Edit LnList</h1>
+
+    {{ include('ln_list/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_ln_list_index') }}">back to list</a>
+
+    {{ include('ln_list/_delete_form.html.twig') }}
+{% endblock %}

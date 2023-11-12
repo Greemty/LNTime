@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New LnList{% endblock %}
+
+{% block body %}
+    <h1>Create new LnList</h1>
+
+    {{ include('ln_list/_form.html.twig') }}
+
+    <a href="{{ path('app_ln_list_index') }}">back to list</a>
+{% endblock %}

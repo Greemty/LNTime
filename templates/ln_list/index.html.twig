@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LnList index{% endblock %}
+
+{% block body %}
+    <h1>LnList index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ln_list in ln_lists %}
+            <tr>
+                <td>{{ ln_list.id }}</td>
+                <td>{{ ln_list.title }}</td>
+                <td>
+                    <a href="{{ path('app_ln_list_show', {'id': ln_list.id}) }}">show</a>
+                    <a href="{{ path('app_ln_list_edit', {'id': ln_list.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_ln_list_new') }}">Create new</a>
+{% endblock %}
