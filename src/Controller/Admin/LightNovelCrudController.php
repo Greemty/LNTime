@@ -31,7 +31,10 @@ class LightNovelCrudController extends AbstractCrudController
                 ->setFormType(VichImageType::class)
                 ->HideOnIndex(),
             TextEditorField::new('description'),
-            AssociationField::new('inGenre')
+            AssociationField::new('inGenre'),
+            AssociationField::new('users')
+                ->setFormTypeOption('by_reference', false)
+            ,
         ];
     }
 

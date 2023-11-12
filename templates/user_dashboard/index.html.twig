@@ -17,7 +17,7 @@
     <h1>Vos Listes :</h1>
     <ul>
         {% for list in User.lnLists %}
-            <li><a href="">{{ list }}</a></li>
+            <li><a href="{{ path('app_ln_list_show', {'id': list.id}) }}">{{ list }}</a></li>
         {% endfor %}
     </ul>
     <a class="btn btn-outline-dark mt-auto" href="{{ path('app_ln_list_new') }}">Create new</a>
@@ -26,9 +26,10 @@
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
         <h1>Vos LightNovels :</h1>
+        <br>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             <!-- Add lightnovel -->
-            <a href="#">
+            <a href="{{ path('lightnovel_new') }}">
             <div class="col mb-5">
                 <div class="card h-100 align-items-center" style="height: 20em;line-height: 20em;white-space: nowrap;">
                     <!-- Plus logo -->
