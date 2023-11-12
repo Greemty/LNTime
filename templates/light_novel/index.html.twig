@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LightNovelController!{% endblock %}
+{% block title %}{{ lightnovel.title }} page {% endblock %}
 
 {% block body %}
 <style>
@@ -8,9 +8,18 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Page de {{ lightnovel}}! ✅</h1>
-
-
-</div>
+<!-- LightNovel section-->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-top">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ vich_uploader_asset(lightnovel, 'imageFile') }}" alt="..." /></div>
+            <div class="col-md-6">
+                <div class="small mb-1">Genre</div>
+                <h1 class="display-5 fw-bolder">{{ lightnovel.title }}</h1>
+                <p class="lead">{{ lightnovel.author }}</p>
+                <p class="lead">{{ lightnovel.description }}</p>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
