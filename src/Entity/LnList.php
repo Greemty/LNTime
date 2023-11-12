@@ -24,6 +24,15 @@ class LnList
     #[ORM\JoinColumn(nullable: false)]
     private ?User $isOwned = null;
 
+    #[ORM\OneToMany(mappedBy: 'isInList', targetEntity: LightNovel::class)]
+    private Collection $lightNovels;
+
+    public function __construct()
+    {
+        $this->lightNovels = new ArrayCollection();
+    }
+
+
 
     public function getId(): ?int
     {
@@ -59,4 +68,36 @@ class LnList
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, LightNovel>
+     */
+    public function getLightNovels(): Collection
+    {
+        return $this->lightNovels;
+    }
+
+    public function addLightNovel(LightNovel $lightNovel): static
+    {
+        if (!$this->lightNovels->contains($lightNovel)) {
+            $this->lightNovels->add($lightNovel);
+            $lightNovel->setIsInList($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLightNovel(LightNovel $lightNovel): static
+    {
+        if ($this->lightNovels->removeElement($lightNovel)) {
+            // set the owning side to null (unless already changed)
+            if ($lightNovel->getIsInList() === $this) {
+                $lightNovel->setIsInList(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

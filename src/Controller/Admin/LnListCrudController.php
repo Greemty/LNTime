@@ -3,10 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\LnList;
+use Doctrine\ORM\EntityRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class LnListCrudController extends AbstractCrudController
@@ -20,33 +19,20 @@ class LnListCrudController extends AbstractCrudController
     {
         return [
             TextField::new('title'),
-            AssociationField::new('isOwned'),
-            /*
-            AssociationField::new('lightnovels')
-                ->onlyOnForms()
-                // on ne souhaite pas gérer l'association entre les
-                // lightnovels et la LnList dès la création de la
-                // LnList
-                ->hideWhenCreating()
-                ->setTemplatePath('admin/fields/[inventaire]_lightnovels.html.twig')
-                // Ajout possible seulement pour des lightnovels qui
-                // appartiennent même propriétaire de l'[inventaire]
-                // que le User de la LnList
-                ->setQueryBuilder(
-                    function (QueryBuilder $queryBuilder) {
-                        // récupération de l'instance courante de LnList
-                        $currentLnList = $this->getContext()->getEntity()->getInstance();
-                        $User = $currentLnList->getUser();
-                        $memberId = $User->getId();
-                        // charge les seuls lightnovels dont le 'owner' de l'[inventaire] est le User de la galerie
-                        $queryBuilder->leftJoin('entity.[inventaire]', 'i')
-                            ->leftJoin('i.owner', 'm')
-                            ->andWhere('m.id = :member_id')
-                            ->setParameter('member_id', $memberId);
-                        return $queryBuilder;
-                    }
-                ),
-            */
+            AssociationField::new('isOwned',label: 'Is Owned By'),
+
+            AssociationField::new('lightNovels',label: 'Contains')
+                ->setFormTypeOption('by_reference', false)
+                //On autorise l'ajout dans une liste d'un lightnovel seulement si l'owner de la liste suit le lightnovel
+                ->setFormTypeOption('query_builder', function (EntityRepository $lightNovelRepository) {
+                    $currentList = $this->getContext()->getEntity()->getInstance();
+                    $user = $currentList->getIsOwned();
+
+                    return $lightNovelRepository->createQueryBuilder('ln')
+                        ->join('ln.users', 'user')
+                        ->where('user.id = :userId')
+                        ->setParameter('userId', $user->getId());
+                }),
         ];
     }
 

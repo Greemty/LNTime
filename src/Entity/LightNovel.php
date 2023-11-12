@@ -34,6 +34,9 @@ class LightNovel
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'follow')]
     private Collection $users;
 
+    #[ORM\ManyToOne(inversedBy: 'lightNovels')]
+    private ?LnList $isInList = null;
+
     public function __construct()
     {
         $this->inGenre = new ArrayCollection();
@@ -154,4 +157,18 @@ class LightNovel
 
         return $this;
     }
+
+    public function getIsInList(): ?LnList
+    {
+        return $this->isInList;
+    }
+
+    public function setIsInList(?LnList $isInList): static
+    {
+        $this->isInList = $isInList;
+
+        return $this;
+    }
+
+
 }
