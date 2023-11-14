@@ -12,3 +12,6 @@ bootstrap_menu:
         logout:
           label: 'Logout'
           route: 'app_logout'
+        Admin:
+          label: 'Admin Space'
+          route : 'admin'

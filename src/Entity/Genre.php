@@ -21,6 +21,9 @@ class Genre
     #[ORM\ManyToMany(targetEntity: LightNovel::class, mappedBy: 'inGenre')]
     private Collection $lightNovels;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $IsPublished = null;
+
     public function __construct()
     {
         $this->lightNovels = new ArrayCollection();
@@ -70,6 +73,18 @@ class Genre
         if ($this->lightNovels->removeElement($lightNovel)) {
             $lightNovel->removeInGenre($this);
         }
+
+        return $this;
+    }
+
+    public function isIsPublished(): ?bool
+    {
+        return $this->IsPublished;
+    }
+
+    public function setIsPublished(?bool $IsPublished): static
+    {
+        $this->IsPublished = $IsPublished;
 
         return $this;
     }
