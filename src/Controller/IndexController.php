@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Genre;
+use App\Entity\LightNovel;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,9 +16,11 @@ class IndexController extends AbstractController
     {
         $entityManager= $doctrine->getManager();
         $genres = $entityManager->getRepository(Genre::class)->findAll();
+        $lightnovels = $entityManager->getRepository(LightNovel::class)->findAll();
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',
             'genres' => $genres,
+            'lightnovels' => $lightnovels,
         ]);
     }
 }

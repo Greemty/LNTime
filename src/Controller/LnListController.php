@@ -33,7 +33,7 @@ class LnListController extends AbstractController
             $entityManager->persist($lnList);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_ln_list_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('dashboard', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('ln_list/new.html.twig', [

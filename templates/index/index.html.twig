@@ -8,12 +8,43 @@
         .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
     </style>
 
-    <div class="example-wrapper">
-        <h1>Liste des catégories :</h1>
+    <div class="container px-4 px-lg-5 mt-5">
+        <h1>Catégories :</h1>
         <ul>
             {% for genre in genres %}
                 <li><a href="{{ path('genre', {'categoryName': genre.categoryName}) }}">{{ genre }}</a></li>
             {% endfor %}
         </ul>
     </div>
+
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <h1>LightNovels :</h1>
+            <br>
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                {% for lightnovel in lightnovels %}
+                    <!-- Début affichage d'un lightnovel -->
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- LightNovel image-->
+                            <img class="card-img-top" style="height:20vh;object-fit: cover;" src="{{ vich_uploader_asset(lightnovel, 'imageFile') }}" />
+                            <!-- LightNovel details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <h5 class="fw-bolder">{{ lightnovel.title }}</h5>
+                                    {{ lightnovel.author }}
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ path('lightnovel', {'title': lightnovel.title}) }}">View</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fin affichage d'un lightnovel -->
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
 {% endblock %}

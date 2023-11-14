@@ -157,7 +157,7 @@ class LightNovel
     {
         if (!$this->inGenre->contains($inGenre)) {
             $this->inGenre->add($inGenre);
-            $inGenre->setLightNovel($this);
+            $inGenre->addLightNovel($this);
         }
 
         return $this;
@@ -168,7 +168,7 @@ class LightNovel
         if ($this->inGenre->removeElement($inGenre)) {
             // set the owning side to null (unless already changed)
             if ($inGenre->getLightNovel() === $this) {
-                $inGenre->setLightNovel(null);
+                $inGenre->addLightNovel(null);
             }
         }
 
